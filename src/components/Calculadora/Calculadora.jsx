@@ -90,18 +90,19 @@ const Calculadora = () => {
                             </thead>
                             <tbody>
                                 {actuales.map((item, index) => (
-                                    <tr key={index} className={item.tipoTurno === 'Nocturno' ? styles.nightRow : ''}>
-                                        <td className={styles.userName} data-label="Usuario">{item.usuario}</td>
-                                        <td data-label="ID">{item.idUsuario}</td>
-                                        <td data-label="Fecha">{item.fechaPeriodo}</td>
-                                        <td data-label="Entrada">{item.primeraEntrada}</td>
-                                        <td data-label="Salida">{item.ultimaSalida}</td>
-                                        <td data-label="Turno">{item.tipoTurno}</td>
-                                        <td data-label="Trabajadas" className={styles.blueText}>{item.horasTrabajadas}</td>
-                                        <td data-label="Jornada">{item.jornada}</td>
-                                        <td data-label="Normales" className={styles.greenText}>{item.horasNormales}</td>
-                                        <td data-label="Extras" className={styles.redText}>{item.horasExtras}</td>
-                                    </tr>
+                                   // ... (dentro del map de actuales)
+<tr key={index} className={item.tipoTurno === 'Nocturno' ? styles.nightRow : ''}>
+    <td className={styles.userName} data-label="Usuario">{item.usuario}</td>
+    <td data-label="ID">{item.idUsuario}</td>
+    <td data-label="Fecha">{item.fechaPeriodo}</td>
+    <td data-label="Entrada">{item.primeraEntrada}</td>
+    <td data-label="Salida">{item.ultimaSalida}</td>
+    <td data-label="Turno">{item.tipoTurno}</td>
+    <td data-label="Trabajadas" className={styles.blueText}>{item.horasTrabajadas}</td>
+    <td data-label="Jornada">{item.jornada}</td>
+    <td data-label="Normales" className={styles.greenText}>{item.horasNormales}</td>
+    <td data-label="Extras" className={styles.redText}>{item.horasExtras}</td>
+</tr>
                                 ))}
                             </tbody>
                         </table>

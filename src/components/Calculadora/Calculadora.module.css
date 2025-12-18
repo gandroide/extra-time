@@ -139,3 +139,43 @@
     font-weight: bold;
     color: #555;
 }
+
+/* ... (mismo código anterior arriba) ... */
+
+/* ESTILOS PARA ESCRITORIO (PC) */
+.table tr {
+    transition: background-color 0.2s ease; /* Transición suave */
+}
+
+.table tr:hover {
+    background-color: #f1f7ff !important; /* Azul muy clarito al pasar el mouse */
+    cursor: default;
+}
+
+/* Sombras y bordes para que resalten las celdas al pasar el mouse */
+.table tr:hover td {
+    color: #000;
+    border-bottom: 1px solid #007bff44;
+}
+
+/* AJUSTES PARA MÓVIL (CARDS) */
+@media (max-width: 768px) {
+    /* ... (mismo código de cards anterior) ... */
+
+    .table tr {
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Efecto al tocar la tarjeta en el celular */
+    .table tr:active {
+        transform: scale(0.98);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background-color: #fafafa;
+    }
+}
