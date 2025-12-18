@@ -22,19 +22,13 @@ const Calculadora = () => {
 
     const dataOriginal = resultados.length > 0 ? resultados : datosPersistentes;
 
-    // Lógica de filtrado corregida para búsqueda por fecha, ID y nombre
     const dataFiltrada = useMemo(() => {
         const term = searchTerm.toLowerCase().trim();
         if (!term) return dataOriginal;
-
         return dataOriginal.filter(item => {
-            const valNombre = String(item.usuario).toLowerCase();
-            const valId = String(item.idUsuario).toLowerCase();
-            const valFecha = String(item.fechaPeriodo).toLowerCase();
-
-            return valNombre.includes(term) || 
-                   valId.includes(term) || 
-                   valFecha.includes(term);
+            return String(item.usuario).toLowerCase().includes(term) || 
+                   String(item.idUsuario).toLowerCase().includes(term) || 
+                   String(item.fechaPeriodo).toLowerCase().includes(term);
         });
     }, [dataOriginal, searchTerm]);
 
@@ -52,7 +46,7 @@ const Calculadora = () => {
         reiniciar();
     };
 
-    // Estilos de colores solicitados
+    // Estilos de colores
     const blueStyle = { color: '#007bff', fontWeight: 'bold' };
     const greenStyle = { color: '#28a745', fontWeight: 'bold' };
     const redStyle = { color: '#dc3545', fontWeight: 'bold' };
@@ -60,46 +54,46 @@ const Calculadora = () => {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.title}>Reporte de Asistencia Logística</h1>
+                <h1 className={styles.title}>Reporte ST GONZALEZ</h1>
             </header>
 
             <div className={styles.uploadArea}>
                 {dataOriginal.length === 0 ? (
                     <label className={styles.fileLabel}>
                         <input type="file" accept=".csv" onChange={(e) => calcularReporte(e.target.files[0])} className={styles.hiddenInput} />
-                        <div className={styles.uploadBtn}>📁 Cargar Reporte original.csv</div>
+                        <div className={styles.uploadBtn}>📁 Cargar Reporte</div>
                     </label>
                 ) : (
-                    <div className={styles.controlsRow} style={{ display: 'flex', gap: '10px', width: '100%', maxWidth: '800px' }}>
+                    <div className={styles.controlsRow}>
                         <input 
                             type="text" 
                             className={styles.searchInput}
-                            placeholder="🔍 Buscar por nombre, ID o fecha (ej: 13/10)..."
+                            placeholder="🔍 Buscar..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
                         />
-                        <button className={styles.btnReset} onClick={handleReset}>🔄 Nuevo Archivo</button>
+                        <button className={styles.btnReset} onClick={handleReset}>🔄 Nuevo</button>
                     </div>
                 )}
             </div>
 
             {dataFiltrada.length > 0 ? (
                 <div className={styles.resultsArea}>
+                    {/* Contenedor con scroll para iOS */}
                     <div className={styles.tableWrapper}>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
                                     <th>Usuario</th>
-                                    <th>ID Usuario</th>
-                                    <th>Fecha/Período</th>
-                                    <th>Primera Entrada</th>
-                                    <th>Última Salida</th>
-                                    <th>Tipo Turno</th>
-                                    <th>Horas Trabajadas</th>
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                    <th>Turno</th>
+                                    <th>Trabajadas</th>
                                     <th>Jornada</th>
-                                    <th>Horas Normales</th>
-                                    <th>Horas Extras</th>
+                                    <th>Normales</th>
+                                    <th>Extras</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -107,7 +101,7 @@ const Calculadora = () => {
                                     <tr key={index} className={item.tipoTurno === 'Nocturno' ? styles.nightRow : ''}>
                                         <td className={styles.bold}>{item.usuario}</td>
                                         <td>{item.idUsuario}</td>
-                                        <td>{item.fechaPeriodo}</td>
+                                        <td style={{whiteSpace: 'nowrap'}}>{item.fechaPeriodo}</td>
                                         <td>{item.primeraEntrada}</td>
                                         <td>{item.ultimaSalida}</td>
                                         <td>{item.tipoTurno}</td>
@@ -122,15 +116,13 @@ const Calculadora = () => {
                     </div>
 
                     <div className={styles.pagination}>
-                        <button disabled={paginaActual === 1} onClick={() => setPaginaActual(p => p - 1)}>Anterior</button>
-                        <span>Página {paginaActual} de {totalPaginas} ({dataFiltrada.length} resultados)</span>
-                        <button disabled={paginaActual === totalPaginas} onClick={() => setPaginaActual(p => p + 1)}>Siguiente</button>
+                        <button disabled={paginaActual === 1} onClick={() => setPaginaActual(p => p - 1)}>«</button>
+                        <span>{paginaActual} / {totalPaginas}</span>
+                        <button disabled={paginaActual === totalPaginas} onClick={() => setPaginaActual(p => p + 1)}>»</button>
                     </div>
                 </div>
             ) : dataOriginal.length > 0 && (
-                <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
-                    No se encontraron resultados para la búsqueda.
-                </div>
+                <div className={styles.noResults}>Sin coincidencias</div>
             )}
         </div>
     );
