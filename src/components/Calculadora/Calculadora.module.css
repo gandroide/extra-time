@@ -3,12 +3,10 @@
     max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
-    color: #000; /* Forzar texto negro global */
 }
 
 .header { text-align: center; margin-bottom: 20px; }
-.title { color: #007bff; font-weight: 800; }
-.titleN { color: #000; font-weight: 800; }
+.title { color: #007bff; font-weight: 800; font-size: 1.8rem; }
 
 .controlsRow { display: flex; gap: 10px; margin-bottom: 20px; }
 .searchInput {
@@ -20,6 +18,15 @@
     color: #000;
 }
 
+.btnReset {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
 /* TABLE PC */
 .table {
     width: 100%;
@@ -27,79 +34,87 @@
 }
 
 .table th {
-    background: #f4f4f4;
-    padding: 12px;
+    background: #f8f9fa;
+    padding: 12px 8px;
     text-align: left;
     color: #333;
+    font-size: 13px;
+    border-bottom: 2px solid #dee2e6;
 }
 
 .table td {
-    padding: 12px;
+    padding: 12px 8px;
     border-bottom: 1px solid #eee;
-    color: #000; /* Forzar negro en celdas */
+    color: #000;
+    font-size: 14px;
 }
 
 .blueText { color: #007bff !important; font-weight: bold; }
 .greenText { color: #28a745 !important; font-weight: bold; }
 .redText { color: #dc3545 !important; font-weight: bold; }
 
-/* MOBILE RESPONSIVE - REVISADO PARA SAFARI */
+/* MOBILE RESPONSIVE - CARDS */
 @media (max-width: 768px) {
     .table, .table thead, .table tbody, .table th, .table td, .table tr {
         display: block;
     }
 
     .table thead {
-        display: none; /* Ocultar cabecera real en móvil */
+        display: none;
     }
 
     .table tr {
-        margin-bottom: 15px;
-        border: 2px solid #eee;
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
         border-radius: 12px;
         padding: 10px;
         background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
     .table td {
         border: none;
-        border-bottom: 1px solid #f5f5f5;
+        border-bottom: 1px solid #f8f8f8;
         position: relative;
-        padding-left: 50% !important; /* Espacio para la etiqueta */
+        padding-left: 45% !important;
         text-align: right !important;
-        min-height: 40px;
+        min-height: 45px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        color: #000 !important; /* Asegurar color negro */
+        color: #000 !important;
     }
 
-    /* FORZAR LA APARICIÓN DEL TEXTO DE ETIQUETA */
+    /* ETIQUETAS A LA IZQUIERDA */
     .table td::before {
-        content: attr(data-label); /* Toma el nombre del atributo HTML */
+        content: attr(data-label);
         position: absolute;
         left: 10px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
+        width: 40%;
         text-align: left;
         font-weight: 700;
-        color: #666; /* Gris oscuro para etiquetas */
+        color: #777;
+        font-size: 13px;
     }
 
     .userName {
-        background-color: #f0f7ff;
+        background-color: #007bff;
         padding-left: 10px !important;
         justify-content: center !important;
         font-weight: 800;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         border-radius: 8px;
-        margin-bottom: 10px;
-        color: #007bff !important;
+        margin-bottom: 15px;
+        color: #ffffff !important;
+        text-align: center !important;
     }
 
     .userName::before {
-        display: none; /* No queremos etiqueta "Usuario:" en el título del card */
+        display: none;
+    }
+
+    .nightRow {
+        border-left: 5px solid #007bff;
     }
 }
 
@@ -108,14 +123,19 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
 .pagination button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border-radius: 8px;
     border: 1px solid #007bff;
     background: #fff;
     color: #007bff;
     font-weight: bold;
+}
+
+.pageIndicator {
+    font-weight: bold;
+    color: #555;
 }

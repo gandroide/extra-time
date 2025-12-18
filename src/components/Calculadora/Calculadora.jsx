@@ -37,10 +37,17 @@ const Calculadora = () => {
     const totalPaginas = Math.ceil(dataFiltrada.length / registrosPorPagina);
     const actuales = dataFiltrada.slice((paginaActual - 1) * registrosPorPagina, paginaActual * registrosPorPagina);
 
+    const handleReset = () => {
+        localStorage.removeItem('st_gonzalez_report');
+        setDatosPersistentes([]);
+        setSearchTerm('');
+        reiniciar();
+    };
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.titleN}>ST GONZALEZ</h1>
+                <h1 className={styles.title}>ST GONZALEZ</h1>
             </header>
 
             <div className={styles.uploadArea}>
@@ -58,7 +65,7 @@ const Calculadora = () => {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <button className={styles.btnReset} onClick={() => { localStorage.removeItem('st_gonzalez_report'); setDatosPersistentes([]); reiniciar(); }}>🔄</button>
+                        <button className={styles.btnReset} onClick={handleReset}>🔄</button>
                     </div>
                 )}
             </div>
@@ -74,7 +81,9 @@ const Calculadora = () => {
                                     <th>Fecha</th>
                                     <th>Entrada</th>
                                     <th>Salida</th>
+                                    <th>Turno</th>
                                     <th>Trabajadas</th>
+                                    <th>Jornada</th>
                                     <th>Normales</th>
                                     <th>Extras</th>
                                 </tr>
@@ -87,7 +96,9 @@ const Calculadora = () => {
                                         <td data-label="Fecha">{item.fechaPeriodo}</td>
                                         <td data-label="Entrada">{item.primeraEntrada}</td>
                                         <td data-label="Salida">{item.ultimaSalida}</td>
+                                        <td data-label="Turno">{item.tipoTurno}</td>
                                         <td data-label="Trabajadas" className={styles.blueText}>{item.horasTrabajadas}</td>
+                                        <td data-label="Jornada">{item.jornada}</td>
                                         <td data-label="Normales" className={styles.greenText}>{item.horasNormales}</td>
                                         <td data-label="Extras" className={styles.redText}>{item.horasExtras}</td>
                                     </tr>
@@ -98,7 +109,7 @@ const Calculadora = () => {
 
                     <div className={styles.pagination}>
                         <button disabled={paginaActual === 1} onClick={() => setPaginaActual(p => p - 1)}>Anterior</button>
-                        <span>{paginaActual} / {totalPaginas}</span>
+                        <span className={styles.pageIndicator}>{paginaActual} / {totalPaginas}</span>
                         <button disabled={paginaActual === totalPaginas} onClick={() => setPaginaActual(p => p + 1)}>Siguiente</button>
                     </div>
                 </div>
