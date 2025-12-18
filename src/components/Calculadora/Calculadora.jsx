@@ -46,10 +46,11 @@ const Calculadora = () => {
         reiniciar();
     };
 
-    // Estilos de colores
-    const blueStyle = { color: '#007bff', fontWeight: 'bold' };
-    const greenStyle = { color: '#28a745', fontWeight: 'bold' };
-    const redStyle = { color: '#dc3545', fontWeight: 'bold' };
+    // Estilos de colores explícitos para iOS
+    const blueStyle = { color: '#007bff', fontWeight: '700', whiteSpace: 'nowrap' };
+    const greenStyle = { color: '#28a745', fontWeight: '700', whiteSpace: 'nowrap' };
+    const redStyle = { color: '#dc3545', fontWeight: '700', whiteSpace: 'nowrap' };
+    const cellStyle = { whiteSpace: 'nowrap' };
 
     return (
         <div className={styles.container}>
@@ -61,14 +62,14 @@ const Calculadora = () => {
                 {dataOriginal.length === 0 ? (
                     <label className={styles.fileLabel}>
                         <input type="file" accept=".csv" onChange={(e) => calcularReporte(e.target.files[0])} className={styles.hiddenInput} />
-                        <div className={styles.uploadBtn}>📁 Cargar Reporte</div>
+                        <div className={styles.uploadBtn}>📁 Cargar Reporte CSV</div>
                     </label>
                 ) : (
                     <div className={styles.controlsRow}>
                         <input 
                             type="text" 
                             className={styles.searchInput}
-                            placeholder="🔍 Buscar..."
+                            placeholder="🔍 Buscar nombre, ID o fecha..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -79,7 +80,6 @@ const Calculadora = () => {
 
             {dataFiltrada.length > 0 ? (
                 <div className={styles.resultsArea}>
-                    {/* Contenedor con scroll para iOS */}
                     <div className={styles.tableWrapper}>
                         <table className={styles.table}>
                             <thead>
@@ -99,14 +99,14 @@ const Calculadora = () => {
                             <tbody>
                                 {actuales.map((item, index) => (
                                     <tr key={index} className={item.tipoTurno === 'Nocturno' ? styles.nightRow : ''}>
-                                        <td className={styles.bold}>{item.usuario}</td>
-                                        <td>{item.idUsuario}</td>
-                                        <td style={{whiteSpace: 'nowrap'}}>{item.fechaPeriodo}</td>
-                                        <td>{item.primeraEntrada}</td>
-                                        <td>{item.ultimaSalida}</td>
-                                        <td>{item.tipoTurno}</td>
+                                        <td className={styles.boldCell}>{item.usuario}</td>
+                                        <td style={cellStyle}>{item.idUsuario}</td>
+                                        <td style={cellStyle}>{item.fechaPeriodo}</td>
+                                        <td style={cellStyle}>{item.primeraEntrada}</td>
+                                        <td style={cellStyle}>{item.ultimaSalida}</td>
+                                        <td style={cellStyle}>{item.tipoTurno}</td>
                                         <td style={blueStyle}>{item.horasTrabajadas}</td>
-                                        <td>{item.jornada}</td>
+                                        <td style={cellStyle}>{item.jornada}</td>
                                         <td style={greenStyle}>{item.horasNormales}</td>
                                         <td style={redStyle}>{item.horasExtras}</td>
                                     </tr>
@@ -116,13 +116,13 @@ const Calculadora = () => {
                     </div>
 
                     <div className={styles.pagination}>
-                        <button disabled={paginaActual === 1} onClick={() => setPaginaActual(p => p - 1)}>«</button>
-                        <span>{paginaActual} / {totalPaginas}</span>
-                        <button disabled={paginaActual === totalPaginas} onClick={() => setPaginaActual(p => p + 1)}>»</button>
+                        <button disabled={paginaActual === 1} onClick={() => setPaginaActual(p => p - 1)}>« Anterior</button>
+                        <span className={styles.pageIndicator}>{paginaActual} / {totalPaginas}</span>
+                        <button disabled={paginaActual === totalPaginas} onClick={() => setPaginaActual(p => p + 1)}>Siguiente »</button>
                     </div>
                 </div>
             ) : dataOriginal.length > 0 && (
-                <div className={styles.noResults}>Sin coincidencias</div>
+                <div className={styles.noResults}>No hay resultados para la búsqueda</div>
             )}
         </div>
     );
